@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32wb0x_hal_radio.h
+  * @file    stm32wb0x_hal_radio.c
   * @author  GPM WBL Application Team
   * @brief   This file provides all the Radio Driver APIs.
   ******************************************************************************
@@ -206,13 +206,7 @@ volatile uint32_t hot_table_radio_config_u32[((HOT_TABLE_SIZE + 3) >> 2) + 4] = 
 
 /* BLUE RAM, reserved for radio communication. Not usable from the application */
 __SECTION(".bss.__blue_RAM")
-#if defined(STM32WB05) || defined(STM32WB09)
-__REQUIRED(uint8_t __blue_RAM[CFG_NUM_RADIO_TASKS * 92 + 28]) = {0,};
-#elif defined(STM32WB06) || defined (STM32WB07)
-__REQUIRED(uint8_t __blue_RAM[CFG_NUM_RADIO_TASKS * 80 + 28]) = {0,};
-#else
-#warning "No Blue RAM allocated"
-#endif
+__REQUIRED(uint8_t __blue_RAM[CFG_NUM_RADIO_TASKS * sizeof(STATMACH_TypeDef) + sizeof(GLOBALSTATMACH_TypeDef)]) = {0,};
 
 /**
   * @}
@@ -342,7 +336,7 @@ void HAL_RADIO_Init(RADIO_HandleTypeDef *hradio)
 #endif
 
   /* The commands in the hot table start at word 4
-  * The words 0 t0 2 are used to point to the command list
+  * The words 0 to 2 are used to point to the command list
   * for the various trigger events, word 3 is a null command
   * (see function BLEPLAT_CNTR_SetRadioConfigData)
   */
@@ -396,7 +390,7 @@ void HAL_RADIO_Init(RADIO_HandleTypeDef *hradio)
 
   LL_RADIO_SetRadioConfigurationAddressPointer(hot_table_radio_config_u32[0]);
   /* Reload radio config pointer */
-  *(uint32_t *)(RRM_BASE + 0x10U) = 0x01U;
+  RRM->UDRA_CTRL0 = RRM_UDRA_CTRL0_RELOAD_RDCFGPTR;
   LL_RADIO_Active2ErrorInterrupt_Enable();
 
 #if USE_RADIO_PROPRIETARY_DRIVER
