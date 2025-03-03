@@ -540,6 +540,7 @@ static void HAL_RADIO_ActionPacketIsr(uint32_t int_flags)
       LL_RADIO_TIMER_DisableTimer2(BLUE);
       LL_RADIO_TIMER_DisableBLEWakeupTimer(WAKEUP);
       MODIFY_REG(BLUEGLOB->BYTE4, GLOBAL_BYTE4_ACTIVE_Msk, BLUE_IDLE_0);
+      HAL_RADIO_TIMER_ClearRadioTimerValue();
     }
     else
     {
@@ -602,39 +603,6 @@ static void HAL_RADIO_ActionPacketIsr(uint32_t int_flags)
 
   return ;
 }
-
-/**
-  * @brief RADIO MSP Init
-  * @param  hradio pointer to a RADIO_HandleTypeDef structure that contains
-  *         the configuration information for RADIO module
-  * @retval None
-  */
-__weak void HAL_RADIO_MspInit(RADIO_HandleTypeDef *hradio)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hradio);
-
-  /* NOTE : This function Should not be modified, when the callback is needed,
-            the HAL_I2S_MspInit could be implemented in the user file
-   */
-}
-
-/**
-  * @brief RADIO MSP DeInit
-  * @param  hradio pointer to a RADIO_HandleTypeDef structure that contains
-  *         the configuration information for RADIO module
-  * @retval None
-  */
-__weak void HAL_RADIO_MspDeInit(RADIO_HandleTypeDef *hradio)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hradio);
-
-  /* NOTE : This function Should not be modified, when the callback is needed,
-            the HAL_RADIO_MspDeInit could be implemented in the user file
-   */
-}
-
 
 /**
   * @brief  This routine force the radio to be stopped. After calling this function,
@@ -1745,6 +1713,38 @@ uint8_t HAL_RADIO_ReceivePacketWithAck(uint8_t channel, uint32_t wakeup_time, ui
 }
 
 #endif /* USE_RADIO_PROPRIETARY_DRIVER */
+
+/**
+  * @brief RADIO MSP Init
+  * @param  hradio pointer to a RADIO_HandleTypeDef structure that contains
+  *         the configuration information for RADIO module
+  * @retval None
+  */
+__weak void HAL_RADIO_MspInit(RADIO_HandleTypeDef *hradio)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hradio);
+
+  /* NOTE : This function Should not be modified, when the callback is needed,
+            the HAL_I2S_MspInit could be implemented in the user file
+   */
+}
+
+/**
+  * @brief RADIO MSP DeInit
+  * @param  hradio pointer to a RADIO_HandleTypeDef structure that contains
+  *         the configuration information for RADIO module
+  * @retval None
+  */
+__weak void HAL_RADIO_MspDeInit(RADIO_HandleTypeDef *hradio)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hradio);
+
+  /* NOTE : This function Should not be modified, when the callback is needed,
+            the HAL_RADIO_MspDeInit could be implemented in the user file
+   */
+}
 
 __weak void HAL_RADIO_TxRxCallback(uint32_t flags)
 {

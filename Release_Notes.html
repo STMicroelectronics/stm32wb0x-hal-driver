@@ -40,7 +40,7 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section1" checked aria-hidden="true"> <label for="collapse-section1" checked aria-hidden="true"><strong>V1.1.0 / 30-October-2024</strong></label>
+<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" checked aria-hidden="true"><strong>V1.2.0 / 05-February-2025</strong></label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <ul>
@@ -49,41 +49,55 @@
 <h2 id="contents">Contents</h2>
 <h3 id="hal-drivers-updates"><strong>HAL Drivers</strong> updates</h3>
 <ul>
-<li><strong>HAL ADC</strong> driver
+<li><strong>HAL RADIO TIMER</strong> driver
 <ul>
-<li>Correct function listed in the top-level comment of file hal_adc.c : paragraph Deinitialization of ADC.</li>
+<li>Improved performances for the radio activity schedule</li>
 </ul></li>
-<li><strong>HAL FLASH</strong> driver
+<li><strong>HAL GPIO</strong> driver
 <ul>
-<li>Add LL_FLASH_FLAG Definition.</li>
+<li>Managed mask registers manipulation to allow the activation of all interrupts in the HAL_GPIO_Deinit function.</li>
+</ul></li>
+<li><strong>HAL SMBUS</strong> driver
+<ul>
+<li>Remove extra parenthesis in c files for driver HAL I2C and SMBUS</li>
+</ul></li>
+<li><strong>HAL I2S</strong> driver
+<ul>
+<li>Update HAL I2S driver to remove ‘go to’ instruction</li>
+</ul></li>
+<li><strong>HAL SPI</strong> driver
+<ul>
+<li>Remove unaligned access from polling transfer API</li>
+<li>Check data size before changing state in reception API</li>
+<li>Add const qualifiers to be compliant with MISRA rule 8.13</li>
+</ul></li>
+<li><strong>HAL UART</strong> driver
+<ul>
+<li>Provide accurate position in RxEventCallback when ReceptionToIdle mode is used with DMA, when UART and DMA interrupts process is delayed</li>
+<li>Correct DMA Rx abort procedure impact on ongoing Tx transfer in polling mode</li>
+<li>Correct references to HAL_UARTEx_WakeupCallback and to HAL_UART_WAKEUP_CB_ID define, according to serie capabilities</li>
+<li>Corrections in CHM/PDF rendering for HAL_UART</li>
+</ul></li>
+<li><strong>HAL USART</strong> driver
+<ul>
+<li>Correct wrong comment in HAL_USARTEx_DisableFifoMode() function</li>
+<li>Improve the visibility of the SPI function support in HAL USART description</li>
+<li>Align prescaler value used by default in USART_GET_DIV_FACTOR macro with RM</li>
+</ul></li>
+</ul>
+<h3 id="ll-drivers-updates"><strong>LL Drivers</strong> updates</h3>
+<ul>
+<li><strong>LL LPUART</strong> driver
+<ul>
+<li>Add LL LPUART API allowing TX FIFO flush request</li>
+</ul></li>
+<li><strong>LL USART</strong> driver
+<ul>
+<li>Solve Coverity out-of-bound memory access warning in use of USART_PRESCALER_TAB array</li>
 </ul></li>
 </ul>
 <p><br />
 </p>
-<h3 id="ll-drivers-updates"><strong>LL Drivers</strong> updates</h3>
-<ul>
-<li><strong>LL ADC</strong> driver
-<ul>
-<li>Remove LL_ADC_CHANNEL_TEMPSENSOR/VBAT from parameter list of LL_ADC_Get/SetChannelVoltageRange().</li>
-</ul></li>
-<li><strong>LL RCC</strong> driver
-<ul>
-<li>Involves reading flags from the mirrored address instead of the register address.</li>
-</ul></li>
-<li><strong>LL RNG</strong> driver
-<ul>
-<li>Remove the BP_POSTP bit of the RNG_CR from CMSIS, is reserved for internal testing only.</li>
-<li>Add LL_RNG functions to acknowledge WB09 RNG interrupts.</li>
-</ul></li>
-<li><strong>LL SYSTEM</strong> driver
-<ul>
-<li>Add LL_FLASH_FLAG Definition.</li>
-</ul></li>
-<li><strong>LL ADC</strong> driver
-<ul>
-<li>Fix incorrect values returned by LL_UTILS_GetPackageType() function due to invalid mask.</li>
-</ul></li>
-</ul>
 <h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
 <ul>
 <li>Devices :
@@ -119,19 +133,48 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" checked aria-hidden="true"><strong>V1.0.0 / 05-June-2024</strong></label>
+<input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" checked aria-hidden="true"><strong>V1.1.0 / 30-October-2024</strong></label>
 <div>
 <h2 id="main-changes-1">Main Changes</h2>
 <ul>
-<li>First release of <strong>STM32CubeWB0</strong> Firmware package supporting <strong>STM32WB0x</strong> devices</li>
+<li>Release of <strong>STM32CubeWB0</strong> Firmware package supporting <strong>STM32WB0x</strong> devices</li>
 </ul>
 <h2 id="contents-1">Contents</h2>
-<h3 id="first-release-of-halll-drivers-for-stm32wb0x-series">First Release of <strong>HAL/LL Drivers</strong> for <strong>STM32WB0x</strong> series</h3>
+<h3 id="hal-drivers-updates-1"><strong>HAL Drivers</strong> updates</h3>
 <ul>
-<li><strong>HAL/LL Drivers</strong> are available for all peripherals:
+<li><strong>HAL ADC</strong> driver
 <ul>
-<li><p><strong>HAL</strong>: ADC, CORTEX, CRC, CRS, DMA, FLASH, GPIO, I2C, I2S, IRDA, IWDG, PKA, PWR, RADIO, RCC, RNG, RTC, SMARTCARD, SMBUS, SPI, TIM, UART, USART</p></li>
-<li><p><strong>LL</strong>: ADC, CRC, DMA, GPIO, I2C, LPUART, PKA, PWR, RCC, RNG, RTC, SPI, TIM, USART, UTILS</p></li>
+<li>Correct function listed in the top-level comment of file hal_adc.c : paragraph Deinitialization of ADC.</li>
+</ul></li>
+<li><strong>HAL FLASH</strong> driver
+<ul>
+<li>Add LL_FLASH_FLAG Definition.</li>
+</ul></li>
+</ul>
+<p><br />
+</p>
+<h3 id="ll-drivers-updates-1"><strong>LL Drivers</strong> updates</h3>
+<ul>
+<li><strong>LL ADC</strong> driver
+<ul>
+<li>Remove LL_ADC_CHANNEL_TEMPSENSOR/VBAT from parameter list of LL_ADC_Get/SetChannelVoltageRange().</li>
+</ul></li>
+<li><strong>LL RCC</strong> driver
+<ul>
+<li>Involves reading flags from the mirrored address instead of the register address.</li>
+</ul></li>
+<li><strong>LL RNG</strong> driver
+<ul>
+<li>Remove the BP_POSTP bit of the RNG_CR from CMSIS, is reserved for internal testing only.</li>
+<li>Add LL_RNG functions to acknowledge WB09 RNG interrupts.</li>
+</ul></li>
+<li><strong>LL SYSTEM</strong> driver
+<ul>
+<li>Add LL_FLASH_FLAG Definition.</li>
+</ul></li>
+<li><strong>LL ADC</strong> driver
+<ul>
+<li>Fix incorrect values returned by LL_UTILS_GetPackageType() function due to invalid mask.</li>
 </ul></li>
 </ul>
 <h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
@@ -163,6 +206,56 @@
 <li>None</li>
 </ul>
 <h2 id="notes-1">Notes</h2>
+<ul>
+<li>None</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" checked aria-hidden="true"><strong>V1.0.0 / 05-June-2024</strong></label>
+<div>
+<h2 id="main-changes-2">Main Changes</h2>
+<ul>
+<li>First release of <strong>STM32CubeWB0</strong> Firmware package supporting <strong>STM32WB0x</strong> devices</li>
+</ul>
+<h2 id="contents-2">Contents</h2>
+<h3 id="first-release-of-halll-drivers-for-stm32wb0x-series">First Release of <strong>HAL/LL Drivers</strong> for <strong>STM32WB0x</strong> series</h3>
+<ul>
+<li><strong>HAL/LL Drivers</strong> are available for all peripherals:
+<ul>
+<li><p><strong>HAL</strong>: ADC, CORTEX, CRC, CRS, DMA, FLASH, GPIO, I2C, I2S, IRDA, IWDG, PKA, PWR, RADIO, RCC, RNG, RTC, SMARTCARD, SMBUS, SPI, TIM, UART, USART</p></li>
+<li><p><strong>LL</strong>: ADC, CRC, DMA, GPIO, I2C, LPUART, PKA, PWR, RCC, RNG, RTC, SPI, TIM, USART, UTILS</p></li>
+</ul></li>
+</ul>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
+<ul>
+<li>Devices :
+<ul>
+<li>STM32WB05</li>
+<li>STM32WB06</li>
+<li>STM32WB07</li>
+<li>STM32WB09</li>
+</ul></li>
+<li>Boards :
+<ul>
+<li>NUCLEO-WB09KE</li>
+<li>NUCLEO-WB07CC</li>
+<li>NUCLEO-WB05KZ</li>
+</ul></li>
+</ul>
+<h2 id="backward-compatibility-2">Backward compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="known-limitations-2">Known Limitations</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="dependencies-2">Dependencies</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="notes-2">Notes</h2>
 <ul>
 <li>None</li>
 </ul>
